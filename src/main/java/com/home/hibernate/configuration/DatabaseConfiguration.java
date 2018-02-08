@@ -11,6 +11,7 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -20,42 +21,34 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 
-    @Bean
-    @Qualifier("Hiber")
-    public DataSource dataSourceProperties() {
-        DataSource dataSource = DataSourceBuilder.create()
-                .driverClassName("org.h2.Driver")
-                .username("hibApp")
-                .password("Password123-")
-                .url("jdbc:h2:mem:testdb")
-                .build();
+//    @Bean
+//    public DataSource dataSourceProperties() {
+//        DataSource dataSource = DataSourceBuilder.create()
+//                .driverClassName("org.h2.Driver")
+//                .username("hibApp")
+//                .password("Password123-")
+//                .url("jdbc:h2:mem:testdb")
+//                .build();
+//
+//        Resource initSchema = new ClassPathResource("scripts/schema-h2.sql");
+//        Resource initData = new ClassPathResource("scripts/data-h2.sql");
+//        DatabasePopulator databasePopulator = new ResourceDatabasePopulator(initSchema, initData);
+//        DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+//
+//        return dataSource;
+//    }
 
-        Resource initSchema = new ClassPathResource("scripts/schema-h2.sql");
-        Resource initData = new ClassPathResource("scripts/data-h2.sql");
-        DatabasePopulator databasePopulator = new ResourceDatabasePopulator(initSchema, initData);
-        DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+//        LocalContainerEntityManagerFactoryBean container = new LocalContainerEntityManagerFactoryBean();
+//        container.setDataSource(dataSource);
+////        container.setPersistenceUnitName("Hibernate");
+//        container.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+//        return container;
+//    }
 
-        return dataSource;
-    }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("Hiber") DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean container = new LocalContainerEntityManagerFactoryBean();
-        container.setDataSource(dataSource);
-        container.setPersistenceUnitName("Hibernate");
-        container.setJpaVendorAdapter(jpaVendorAdapter());
-        return container;
-    }
-
-    @Bean
-    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean bean) {
-        JpaTransactionManager jtManager = new JpaTransactionManager(
-                bean.getObject());
-        return jtManager;
-    }
-
-    @Bean
-    public HibernateJpaVendorAdapter jpaVendorAdapter() {
-        return new HibernateJpaVendorAdapter();
-    }
+//    @Bean
+//    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean bean) {
+//        return new JpaTransactionManager(bean.getObject());
+//    }
 }

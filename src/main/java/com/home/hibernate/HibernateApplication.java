@@ -33,10 +33,10 @@ public class HibernateApplication extends SpringBootServletInitializer implement
     }
 
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... strings) {
 
         Message message = new Message();
-        message.setText("Hello World!");
+        message.setText("W!");
 
         messageRepository.saveAndFlush(message);
 
