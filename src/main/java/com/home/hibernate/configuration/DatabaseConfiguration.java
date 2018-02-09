@@ -1,9 +1,9 @@
 package com.home.hibernate.configuration;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 public class DatabaseConfiguration {
 
     @Bean
+    @Qualifier(value = "inMemoryDb")
     public DataSource dataSourceProperties() {
         DataSource dataSource = DataSourceBuilder.create()
                 .driverClassName("org.h2.Driver")
@@ -38,8 +39,7 @@ public class DatabaseConfiguration {
     }
 
     @Bean
-    @Primary
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier(value = "inMemoryDb") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean container = new LocalContainerEntityManagerFactoryBean();
         container.setDataSource(dataSource);
         container.setPersistenceUnitName("Hibernate");

@@ -1,20 +1,22 @@
 package com.home.hibernate.model.messages;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@Setter
 @Getter
 @NoArgsConstructor
 @ToString
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "msg_seq_gen")
+    @SequenceGenerator(name = "msg_seq_gen", sequenceName = "msg_seq", allocationSize = 1)
     private Long id;
+
+    @Setter
     private String text;
 }
