@@ -2,25 +2,18 @@ package com.home.hibernate;
 
 import com.home.hibernate.model.messages.Message;
 import com.home.hibernate.repository.messages.MessageRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 @SpringBootApplication
-@EnableJpaRepositories
-public class HibernateApplication extends SpringBootServletInitializer implements CommandLineRunner {
-
-    private Logger logger = LoggerFactory.getLogger(HibernateApplication.class);
+public class HibernateApp extends SpringBootServletInitializer implements CommandLineRunner {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -29,7 +22,7 @@ public class HibernateApplication extends SpringBootServletInitializer implement
     private MessageRepository messageRepository;
 
     public static void main(String[] args) {
-        SpringApplication.run(HibernateApplication.class, args);
+        SpringApplication.run(HibernateApp.class, args);
     }
 
     @Override
@@ -41,10 +34,11 @@ public class HibernateApplication extends SpringBootServletInitializer implement
         messageRepository.saveAndFlush(message);
 
         logger.info(messageRepository.getMessages().toString());
+
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return super.configure(builder.sources(HibernateApplication.class));
+        return super.configure(builder.sources(HibernateApp.class));
     }
 }

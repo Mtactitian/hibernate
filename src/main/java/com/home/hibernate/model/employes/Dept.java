@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Setter
@@ -18,10 +16,10 @@ public class Dept {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(precision = 2,columnDefinition = "number")
-    public Integer deptno;
+    @Column(precision = 2, columnDefinition = "number")
+    private Long deptno;
 
-    public String dname;
+    private String dname;
 
-    public String loc;
+    private  String loc;
 }
