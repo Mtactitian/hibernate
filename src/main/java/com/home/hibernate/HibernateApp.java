@@ -1,6 +1,7 @@
 package com.home.hibernate;
 
-import com.home.hibernate.model.messages.Message;
+import com.home.hibernate.repository.employes.DeptRepository;
+import com.home.hibernate.repository.employes.EmployeeRepository;
 import com.home.hibernate.repository.messages.MessageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,42 +14,39 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @SpringBootApplication
-@EnableJpaRepositories(enableDefaultTransactions = false, basePackages = "com.home.hibernate.repository")
+@EnableJpaRepositories(enableDefaultTransactions = false)
 public class HibernateApp extends SpringBootServletInitializer implements CommandLineRunner {
 
-    private Logger slf4jLogger = LoggerFactory.getLogger(HibernateApp.class);
+	private Logger slf4jLogger = LoggerFactory.getLogger(HibernateApp.class);
 
-    @Autowired
-    private MessageRepository messageRepository;
+	@Autowired
+	private MessageRepository messageRepository;
 
-    public static void main(String[] args) {
-        SpringApplication.run(HibernateApp.class, args);
-    }
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
-    @Override
-    @Transactional
-    public void run(String... strings) throws InterruptedException {
+	@Autowired
+	private DeptRepository deptRepository;
 
-        Message message = new Message();
-        message.setText("W!");
-        Message message1 = new Message();
-        message1.setText("W2!");
+	@PersistenceContext
+	private EntityManager em;
 
-        messageRepository.save(message);
-        messageRepository.save(message1);
+	public static void main(String[] args) {
+		SpringApplication.run(HibernateApp.class, args);
+	}
 
-        messageRepository.flush();
+	@Override
+	@Transactional
+	public void run(String... strings) {
 
-        Thread.sleep(100000000);
+	}
 
-        slf4jLogger.info(messageRepository.getMessages().toString());
-
-    }
-
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return super.configure(builder.sources(HibernateApp.class));
-    }
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return super.configure(builder.sources(HibernateApp.class));
+	}
 }

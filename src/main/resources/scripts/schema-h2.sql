@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 SET MODE ORACLE;
 
 CREATE TABLE dept (
@@ -28,9 +30,16 @@ CREATE TABLE emp (
 	CONSTRAINT fk_deptno FOREIGN KEY (deptno) REFERENCES dept (deptno)
 );
 
+CREATE SEQUENCE emp_seq
+	START WITH 7000
+	INCREMENT BY 1
+	MAXVALUE 7400
+	NOCYCLE
+	CACHE 5;
+
 CREATE TABLE message (
-	id   NUMBER(4),
-	text VARCHAR2(500)
+	id   NUMBER(10),
+	text VARCHAR2(500),
 );
 
 
@@ -39,4 +48,4 @@ CREATE SEQUENCE msg_seq
 	increment by 1
 	maxvalue 100000000
 	nocycle
-	cache 5;
+	CACHE 20;

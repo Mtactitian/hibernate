@@ -4,16 +4,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
 http://xmlns.jcp.org/xml/ns/persistence_2_1.xsd">
-    <persistence-unit name="Hibernate">
+    <persistence-unit name="Hibernate" transaction-type="RESOURCE_LOCAL">
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <!--<property name="javax.persistence.schema-generation.database.action" value="update"/>-->
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="false"/>
-            <property name="hibernate.use_sql_comments" value="true"/>
+            <!--<property name="hibernate.format_sql" value="true"/>-->
+            <!--<property name="hibernate.use_sql_comments" value="true"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>-->
             <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
+            <property name="hibernate.jdbc.batch_size" value="5"/>
+            <property name="hibernate.order_inserts" value="true"/>
+            <property name="hibernate.order_updates" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

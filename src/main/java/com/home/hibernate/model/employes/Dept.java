@@ -1,17 +1,20 @@
 package com.home.hibernate.model.employes;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Immutable
-@ToString
+@ToString(exclude = "employees")
+@Table(name = "DEPT")
+@NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Dept {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dept_seq_gen")
@@ -21,4 +24,7 @@ public class Dept {
     private String dname;
 
     private String loc;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dept")
+    private List<Employee> employees = new ArrayList<>();
 }
