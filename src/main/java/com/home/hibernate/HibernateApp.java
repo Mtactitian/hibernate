@@ -1,5 +1,6 @@
 package com.home.hibernate;
 
+import com.home.hibernate.model.employes.Dept;
 import com.home.hibernate.repository.employes.DeptRepository;
 import com.home.hibernate.repository.employes.EmployeeRepository;
 import com.home.hibernate.repository.messages.MessageRepository;
@@ -21,32 +22,36 @@ import javax.persistence.PersistenceContext;
 @EnableJpaRepositories(enableDefaultTransactions = false)
 public class HibernateApp extends SpringBootServletInitializer implements CommandLineRunner {
 
-	private Logger slf4jLogger = LoggerFactory.getLogger(HibernateApp.class);
+    private Logger slf4jLogger = LoggerFactory.getLogger(HibernateApp.class);
 
-	@Autowired
-	private MessageRepository messageRepository;
+    @Autowired
+    private MessageRepository messageRepository;
 
-	@Autowired
-	private EmployeeRepository employeeRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-	@Autowired
-	private DeptRepository deptRepository;
+    @Autowired
+    private DeptRepository deptRepository;
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-	public static void main(String[] args) {
-		SpringApplication.run(HibernateApp.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HibernateApp.class, args);
+    }
 
-	@Override
-	@Transactional
-	public void run(String... strings) {
+    @Override
+    @Transactional(readOnly = true)
+    public void run(String... strings) {
 
-	}
+        Dept dept = deptRepository.findByDeptno(10);
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return super.configure(builder.sources(HibernateApp.class));
-	}
+        System.out.println(dept.getEmployees().get(0).getEmpno());
+        System.out.println(dept.getEmployees().get(1).getEmpno());
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return super.configure(builder.sources(HibernateApp.class));
+    }
 }

@@ -27,6 +27,7 @@ public class Employee {
 	@Column(name = "mgr")
 	private Integer managerNumber;
 
+	@Column(name = "hiredate")
 	private Date hireDate;
 
 	@Column(name = "sal")

@@ -25,6 +25,6 @@ public class Dept {
 
     private String loc;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dept")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "dept", fetch = FetchType.LAZY)
     private List<Employee> employees = new ArrayList<>();
 }
