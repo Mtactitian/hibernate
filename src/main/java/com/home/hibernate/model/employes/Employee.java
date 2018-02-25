@@ -1,5 +1,6 @@
 package com.home.hibernate.model.employes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,5 +39,6 @@ public class Employee {
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "deptno", referencedColumnName = "deptno")
+	@JsonBackReference
 	private Dept dept;
 }
